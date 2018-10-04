@@ -1,4 +1,6 @@
-﻿using System;
+﻿using JobApplications.Models;
+using JobApplications.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,23 +10,18 @@ namespace JobApplications.Controllers
 {
     public class HomeController : Controller
     {
+        IRepository<Candidate> candidateRepository;
+
+        public HomeController(IRepository<Candidate> repository)
+        {
+            candidateRepository = repository;
+        }
+
         public ActionResult Index()
         {
-            return View();
-        }
+            var product = candidateRepository.GetData();
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(product);
         }
     }
 }
